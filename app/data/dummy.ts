@@ -9,6 +9,7 @@ export type ContentItem = {
   source: ContentSource;
   topic: ContentTopic;
   viewCount: string;
+  publishedAt: string;
   summary: string;
   hasThumbnail?: boolean;
 };
@@ -25,6 +26,7 @@ export const DUMMY_ITEMS: ContentItem[] = [
     source: "youtube",
     topic: "LLM",
     viewCount: "2.1M",
+    publishedAt: "3시간 전",
     summary:
       "GPT-5의 기능과 출시 일정이 내부 문서를 통해 처음 공개됐어요. 멀티모달과 추론 능력이 크게 개선될 것으로 보여요.",
     hasThumbnail: true,
@@ -37,6 +39,7 @@ export const DUMMY_ITEMS: ContentItem[] = [
     source: "news",
     topic: "LLM",
     viewCount: "850K",
+    publishedAt: "5시간 전",
     summary:
       "Claude 3.7이 예고 없이 공개됐어요. 벤치마크에서 이전 대비 30% 이상 향상된 수치를 보였어요.",
   },
@@ -48,6 +51,7 @@ export const DUMMY_ITEMS: ContentItem[] = [
     source: "community",
     topic: "로보틱스",
     viewCount: "42K",
+    publishedAt: "8시간 전",
     summary:
       "Reddit r/robotics 기준 72시간 내 최다 공유. Spot 후속작의 손재주가 영상에서 처음 공개됐어요.",
   },
@@ -59,6 +63,7 @@ export const DUMMY_ITEMS: ContentItem[] = [
     source: "youtube",
     topic: "LLM",
     viewCount: "1.2M",
+    publishedAt: "11시간 전",
     summary:
       "두 모델의 실제 프로덕션 코드 작성 성능을 직접 비교했어요. 복잡한 리팩터링에서 결과 차이가 명확했어요.",
     hasThumbnail: true,
@@ -71,6 +76,7 @@ export const DUMMY_ITEMS: ContentItem[] = [
     source: "news",
     topic: "LLM",
     viewCount: "320K",
+    publishedAt: "어제",
     summary:
       "GPT-5 출시와 함께 기존 모델 가격이 평균 40% 인하됐어요. 캐싱 정책도 함께 바뀌었어요.",
   },
@@ -82,6 +88,7 @@ export const DUMMY_ITEMS: ContentItem[] = [
     source: "community",
     topic: "AI 툴",
     viewCount: "18K",
+    publishedAt: "어제",
     summary:
       "Hacker News에서 1000개 이상 댓글이 달렸어요. Background Agent 기능이 특히 주목받고 있어요.",
   },
@@ -93,6 +100,7 @@ export const DUMMY_ITEMS: ContentItem[] = [
     source: "news",
     topic: "연구·논문",
     viewCount: "280K",
+    publishedAt: "2일 전",
     summary:
       "Nature에 전문이 게재됐어요. 단백질 구조 예측 정확도가 기존 대비 45% 개선됐어요.",
   },

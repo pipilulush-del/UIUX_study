@@ -81,6 +81,8 @@ export default function RankingCard({ item, isSaved, onToggleSave }: Props) {
           <span>
             {VIEW_LABELS[item.source]} {item.viewCount}
           </span>
+          <span className="text-white/20">·</span>
+          <span className="text-white/40">{item.publishedAt}</span>
         </div>
 
         {/* AI summary */}
