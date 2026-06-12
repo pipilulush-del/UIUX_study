@@ -6,15 +6,20 @@ import RankingCard from "./components/RankingCard";
 import SkeletonCard from "./components/SkeletonCard";
 import ActiveFilterChips from "./components/ActiveFilterChips";
 import SaveToast from "./components/SaveToast";
+import FeedState, { type FeedStateVariant } from "./components/FeedState";
 import { DUMMY_ITEMS } from "./data/dummy";
 import type { TopicFilter, SourceFilter, ContentItem } from "./data/dummy";
 import { useSaved } from "./context/SavedContext";
+
+// 리뷰용: ?demo=no-content | api-error | network 로 빈·오류 상태(S003)를 확인
+const DEMO_VARIANTS: FeedStateVariant[] = ["no-content", "api-error", "network"];
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedTopic, setSelectedTopic] = useState<TopicFilter>("all");
   const [selectedSource, setSelectedSource] = useState<SourceFilter>("all");
   const [toastVisible, setToastVisible] = useState(false);
+  const [demoState, setDemoState] = useState<FeedStateVariant | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { isSaved, toggleSave } = useSaved();
@@ -22,6 +27,14 @@ export default function HomePage() {
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 700);
     return () => clearTimeout(timer);
+  }, []);
+
+  // 리뷰용 빈·오류 상태(S003) — URL ?demo= 파라미터에서 읽음
+  useEffect(() => {
+    const param = new URLSearchParams(window.location.search).get("demo");
+    if (param && (DEMO_VARIANTS as string[]).includes(param)) {
+      setDemoState(param as FeedStateVariant);
+    }
   }, []);
 
   useEffect(() => {
@@ -85,18 +98,10 @@ export default function HomePage() {
       <div className="max-w-[1200px] mx-auto">
         {isLoading ? (
           Array.from({ length: 5 }).map((_, i) => <SkeletonCard key={i} />)
+        ) : demoState ? (
+          <FeedState variant={demoState} onRetry={() => setDemoState(null)} />
         ) : filteredItems.length === 0 ? (
-          <div className="py-24 text-center">
-            <p className="text-sm text-white/40">
-              이 분야에서 오늘 올라온 콘텐츠가 없어요.
-            </p>
-            <button
-              onClick={clearAllFilters}
-              className="mt-4 text-sm text-white/30 hover:text-white/60 transition-colors duration-150 underline underline-offset-4"
-            >
-              필터 해제하기
-            </button>
-          </div>
+          <FeedState variant="filter-empty" onClearFilter={clearAllFilters} />
         ) : (
           filteredItems.map((item) => (
             <RankingCard
