@@ -3,6 +3,7 @@ import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import AgentationClient from "./components/AgentationClient";
+import { SavedProvider } from "./context/SavedContext";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -22,8 +23,10 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${geistMono.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-[#1f2228] text-white antialiased">
-        <Header />
-        <main className="flex-1">{children}</main>
+        <SavedProvider>
+          <Header />
+          <main className="flex-1">{children}</main>
+        </SavedProvider>
         <AgentationClient />
       </body>
     </html>
